@@ -76,7 +76,7 @@ int main() {
         
         try {
             // cubemap = texture::Cubemap::Make(face_size, face_size, face_data);
-            cubemap = texture::Cubemap::Make("test/skytest.png");
+            cubemap = texture::Cubemap::Make("test/materials/skytest.png");
             std::cout << "✓ Cubemap created successfully" << std::endl;
         } catch (const std::exception& e) {
             std::cerr << "✗ Failed to create cubemap: " << e.what() << std::endl;
