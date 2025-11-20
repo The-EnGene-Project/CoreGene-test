@@ -1,0 +1,6 @@
+[submodule "CoreGene"]
+	path = CoreGene
+	url = https://github.com/The-EnGene-Project/CoreGene.git
+[submodule "CoreGene-deps"]
+	path = CoreGene-deps
+	url = https://github.com/The-EnGene-Project/CoreGene-deps.git

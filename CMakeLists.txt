@@ -25,34 +25,34 @@ add_executable(DepthTest depth_test.cpp)
 
 # Function to configure a test target
 function(configure_test_target target_name)
-    # Add EnGene include directory (from parent directory)
+    # Add EnGene include directory (from CoreGene submodule)
     target_include_directories(${target_name} PRIVATE
-        "${CMAKE_SOURCE_DIR}/../core_gene/src"
-        "${CMAKE_SOURCE_DIR}/.."  # For other_genes/ directory
+        "${CMAKE_SOURCE_DIR}/CoreGene/core_gene/src"
+        "${CMAKE_SOURCE_DIR}/CoreGene"  # For other_genes/ directory
     )
 
     # Add dependency include directories from CoreGene-deps submodule
     target_include_directories(${target_name} PRIVATE
-        "${CMAKE_SOURCE_DIR}/../libs/glad/include"
-        "${CMAKE_SOURCE_DIR}/../libs/glfw/include"
-        "${CMAKE_SOURCE_DIR}/../libs/glm/include"
-        "${CMAKE_SOURCE_DIR}/../libs/stb/include"
+        "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glad/include"
+        "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glfw/include"
+        "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glm/include"
+        "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/stb/include"
     )
 
     # Platform-specific GLFW linking
     if(WIN32)
-        # Windows: Use pre-built GLFW from libs/glfw/lib-mingw-w64
+        # Windows: Use pre-built GLFW from CoreGene-deps submodule
         target_link_libraries(${target_name} PRIVATE
-            "${CMAKE_SOURCE_DIR}/../libs/glfw/lib-mingw-w64/libglfw3.a"
+            "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glfw/lib-mingw-w64/libglfw3.a"
             OpenGL::GL
         )
         
         # Add backtrace support on Windows
         target_include_directories(${target_name} PRIVATE
-            "${CMAKE_SOURCE_DIR}/../libs/backtrace/include"
+            "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/backtrace/include"
         )
         target_link_libraries(${target_name} PRIVATE
-            "${CMAKE_SOURCE_DIR}/../libs/backtrace/lib/libbacktrace.a"
+            "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/backtrace/lib/libbacktrace.a"
         )
     else()
         # Linux/macOS: Try to find system GLFW first, fallback to building from source
@@ -66,9 +66,9 @@ function(configure_test_target target_name)
             )
         else()
             # Build GLFW from submodule source (if available)
-            if(EXISTS "${CMAKE_SOURCE_DIR}/../libs/glfw/CMakeLists.txt")
+            if(EXISTS "${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glfw/CMakeLists.txt")
                 message(STATUS "Building GLFW from submodule source")
-                add_subdirectory("${CMAKE_SOURCE_DIR}/../libs/glfw" "${CMAKE_BINARY_DIR}/glfw" EXCLUDE_FROM_ALL)
+                add_subdirectory("${CMAKE_SOURCE_DIR}/CoreGene-deps/libs/glfw" "${CMAKE_BINARY_DIR}/glfw" EXCLUDE_FROM_ALL)
                 target_link_libraries(${target_name} PRIVATE
                     glfw
                     OpenGL::GL
