@@ -1,8 +1,51 @@
-# EnGene Environment Test
+# CoreGene Test Suite
 
-This directory contains test projects to verify the EnGene environment configuration as documented in AGENTS.md.
+This repository contains the test suite for CoreGene. The CoreGene library and its dependencies are included as git submodules.
+
+## Repository Structure
+
+- `CoreGene/` - CoreGene library (submodule)
+- `CoreGene-deps/` - CoreGene dependencies: GLFW, GLAD, GLM, STB (submodule)
+- `*.cpp` - Test files
+- `CMakeLists.txt` - Build configuration
+- `build/` - Build artifacts (ignored by git)
+
+## Setup Instructions
+
+### 1. Clone the Repository with Submodules
+
+```bash
+git clone --recursive <repository-url> CoreGene-test
+cd CoreGene-test
+```
+
+If you already cloned without `--recursive`, initialize the submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+### 2. Build the Tests
+
+From the CoreGene-test directory:
+
+```bash
+# Clean previous build (if needed)
+Remove-Item -Recurse -Force build
+
+# Configure the build
+cmake -B build -S . -G "MinGW Makefiles"
+
+# Compile all tests
+cmake --build build
+
+# Run the tests
+.\build\EnGeneTest.exe      # Full test with custom shaders
+.\build\SimpleTest.exe      # Simple test with default shaders
+```
 
 ## Test Structure
+
 
 - `main.cpp` - Full test with custom GLSL shaders demonstrating advanced usage
 - `simple_test.cpp` - Minimal test using default shaders for quick verification
