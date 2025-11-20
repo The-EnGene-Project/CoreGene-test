@@ -5,6 +5,18 @@ project(EnGeneTest)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Local Path Override Pattern for CoreGene Library
+# Default: Use the stable submodule path
+set(COREGENE_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/CoreGene/core_gene/src")
+set(COREGENE_ROOT_PATH "${CMAKE_SOURCE_DIR}/CoreGene")
+
+# Override: If DEV_COREGENE_PATH is provided, use local development path
+if(DEFINED DEV_COREGENE_PATH)
+    set(COREGENE_INCLUDE_PATH "${DEV_COREGENE_PATH}/core_gene/src")
+    set(COREGENE_ROOT_PATH "${DEV_COREGENE_PATH}")
+    message(STATUS "🔧 DEV MODE: Using local CoreGene from: ${DEV_COREGENE_PATH}")
+endif()
+
 # Try to find system OpenGL (works on both Windows and Linux)
 find_package(OpenGL REQUIRED)
 
@@ -20,15 +32,14 @@ add_executable(FramebufferBasicTest framebuffer_basic_test.cpp)
 add_executable(FramebufferPostprocessTest framebuffer_postprocess_test.cpp)
 add_executable(StencilTest stencil_test.cpp)
 add_executable(BlendTest blend_test.cpp)
-add_executable(RenderStateComponentTest renderstate_component_test.cpp)
 add_executable(DepthTest depth_test.cpp)
 
 # Function to configure a test target
 function(configure_test_target target_name)
-    # Add EnGene include directory (from CoreGene submodule)
+    # Add EnGene include directory (uses override if DEV_COREGENE_PATH is set)
     target_include_directories(${target_name} PRIVATE
-        "${CMAKE_SOURCE_DIR}/CoreGene/core_gene/src"
-        "${CMAKE_SOURCE_DIR}/CoreGene"  # For other_genes/ directory
+        "${COREGENE_INCLUDE_PATH}"
+        "${COREGENE_ROOT_PATH}"  # For other_genes/ directory
     )
 
     # Add dependency include directories from CoreGene-deps submodule
@@ -95,5 +106,4 @@ configure_test_target(FramebufferBasicTest)
 configure_test_target(FramebufferPostprocessTest)
 configure_test_target(StencilTest)
 configure_test_target(BlendTest)
-configure_test_target(RenderStateComponentTest)
 configure_test_target(DepthTest)

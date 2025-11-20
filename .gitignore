@@ -16,6 +16,7 @@ Makefile
 
 # IDE
 .vscode/
+.kiro/
 .idea/
 *.swp
 *.swo

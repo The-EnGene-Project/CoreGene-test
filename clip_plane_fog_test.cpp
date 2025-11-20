@@ -41,7 +41,7 @@ int main() {
     std::cout << std::endl;
 
     auto* handler = new input::InputHandler();
-    std::shared_ptr<arcball::ArcBallInputHandler> arcball_handler;
+    std::shared_ptr<arcball::ArcBallController> arcball_handler;
     
     // Shared shader pointer
     shader::ShaderPtr fog_shader;

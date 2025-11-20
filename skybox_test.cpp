@@ -43,7 +43,7 @@ int main() {
     std::shared_ptr<environment::EnvironmentMapping> env_mapping4;
     
     auto* handler = new input::InputHandler();
-    std::shared_ptr<arcball::ArcBallInputHandler> arcball_handler;
+    std::shared_ptr<arcball::ArcBallController> arcball_handler;
     
     auto on_init = [&](engene::EnGene& app) {
         // Create procedural cubemap

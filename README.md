@@ -81,6 +81,22 @@ cmake --build build
 - C++17 standard
 - Debug symbols (-g flag)
 
+## Developer Workflow
+
+### Standard Build (Stable Submodule)
+```bash
+cmake -B build -S . -G "MinGW Makefiles"
+cmake --build build
+.\build\SimpleTest.exe
+```
+
+### Active Development Build (Local CoreGene)
+```bash
+cmake -B build -S . -G "MinGW Makefiles" -DDEV_COREGENE_PATH="../CoreGene"
+cmake --build build
+.\build\SimpleTest.exe
+```
+
 ## Build Instructions
 
 From the repository root:
