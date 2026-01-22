@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+﻿cmake_minimum_required(VERSION 3.14)
 project(EnGeneTest)
 
 # Set C++ standard
@@ -22,6 +22,7 @@ find_package(OpenGL REQUIRED)
 
 # Create test executables
 # ADD_EXECUTABLE_MARKER - Do not remove this line (used by create_test scripts)
+add_executable(PlayerMovement ./test/game_related/player_movement.cpp)
 add_executable(EnGeneTest test/basic/main.cpp)
 add_executable(SimpleTest test/basic/simple_test.cpp)
 add_executable(BlendTest test/rendering_pipeline/blend_test.cpp)
@@ -97,6 +98,7 @@ endfunction()
 
 # Configure all test targets
 # CONFIGURE_TARGET_MARKER - Do not remove this line (used by create_test scripts)
+configure_test_target(PlayerMovement)
 configure_test_target(EnGeneTest)
 configure_test_target(SimpleTest)
 configure_test_target(BlendTest)
